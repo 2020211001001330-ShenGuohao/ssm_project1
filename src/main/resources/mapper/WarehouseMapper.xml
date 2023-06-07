@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sgh.dao.WarehouseMapper">
+    <select id="queryAllWarehouse" resultType="Warehouse">
+        SELECT * FROM t_warehouse
+    </select>
+
+
+    <select id="getWarehouseById" parameterType="int" resultType="Warehouse">
+        SELECT * FROM t_warehouse
+        where wid=#{wid}
+    </select>
+
+
+    <select id="getWarehouseByName" parameterType="String" resultType="Warehouse">
+        SELECT * FROM t_warehouse
+        WHERE wname LIKE #{wname}
+    </select>
+
+    <delete id="deleteWarehouseById" parameterType="int">
+        DELETE FROM t_warehouse WHERE wid=#{wid}
+    </delete>
+
+
+    <insert id="insertWarehouse" parameterType="Warehouse">
+        INSERT INTO t_warehouse(wname,wlocation)
+        VALUES(#{wname},#{wlocation});
+    </insert>
+
+    <update id="updateWarehouse" parameterType="Warehouse">
+        UPDATE
+            t_warehouse
+        SET wname=#{wname} ,wlocation=#{wlocation}
+        WHERE wid=#{wid}
+    </update>
+
+</mapper>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap-grid.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+    <script type="text/javascript" src="js/echarts-wordcloud.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div id="chart1" class="col-md-4" style="height: 350px;"></div>
+        <div id="chart2"class="col-md-4" style="height: 350px;"></div>
+        <div id="chart3"class="col-md-4" style="height: 350px;"></div>
+    </div>
+    <div class="row">
+        <div id="chart4" class="col-md-4" style="height: 350px;"></div>
+        <div id="chart5" class="col-md-4"></div>
+        <div id="chart6" class="col-md-4" style="height: 350px;"></div>
+    </div>
+</div>
+
+<script>
+
+
+    //上面 第一个图  柱状图  统计各个客户总的消费情况
+    $(function (){
+
+        var myChart_chart1 = echarts.init(document.getElementById("chart1"));
+        var option_chart1 = {
+
+            title: {
+                left: 'center',
+                text: '客户消费统计',
+                top:15,
+                textStyle: {
+                    color: '#333333',
+                    fontWeight: 'bold',
+                    fontSize: 20
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: []
+            },
+            yAxis: {
+                type: 'value'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            series: [
+                {
+                    data: [],
+                    type: 'bar'
+                }
+            ]
+        };
+
+
+        $.ajax({
+            url: "/getData1",
+            success: function(datas) {
+                option_chart1.xAxis.data=datas.name
+                option_chart1.series[0].data=datas.consumptionvalue
+                myChart_chart1.setOption(option_chart1);
+            },
+            error: function(xhr, type, errorThrown) {
+            }
+        });
+    });
+
+    //上面 第二个图  饼形图  统计各个仓库的销售额
+    $(function () {
+        var myChart_chart2 = echarts.init(document.getElementById("chart2"));
+        var option_chart2 = {
+            title: {
+                left: 'center',
+                text: '各仓库销售额统计',
+                top:10,
+                textStyle: {
+                    color: '#333333',
+                    fontWeight: 'bold',
+                    fontSize: 20
+                }
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                top: '90%',
+                left: 'center'
+            },
+            series: [
+                {
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: '40',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+
+                    ]
+                }
+            ]
+        };
+        $.ajax({
+            url:"/getData2",
+            success: function (datas) {
+                option_chart2.series[0].data=datas;
+                myChart_chart2.setOption(option_chart2);
+
+            },
+            error: function(xhr, type, errorThrown) {
+            }
+        });
+
+
+    });
+
+    //上面 第三个图  柱形图  统计各个仓库的 销售总量，销售总额，剩余总量
+    $(function (){
+        var myChart_chart3 = echarts.init(document.getElementById("chart3"));
+        var option_chart3 = {
+            // title: {
+            //     left: 'center',
+            //     text: '各仓库销售总量，销售总额，剩余总量',
+            //     top:10,
+            //     textStyle: {
+            //         color: '#333333',
+            //         fontWeight: 'bold',
+            //         fontSize: 20
+            //     }
+            // },
+            backgroundColor: 'white',
+            color: ['#E26851', '#2B6CF6', '#D9BE70'],
+            legend: {
+                itemGap: 20,
+                textStyle:{
+                    lineHeight :40,
+                    padding: [6, 4, 5, 6],
+                    color:'rgba(155, 155, 155, 1)'
+                },
+                data: ['销售总量', '销售总额', '剩余总额'],
+            },
+            grid: {
+                top: '60',
+                left: '26',
+                right: '30',
+                bottom: '20',
+                containLabel: true,
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: true,
+                    axisLine: {
+                        show: false,
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#959FA9',
+                            fontSize: 14,
+                        },
+                    },
+                    axisTick: {
+                        show: false,
+                    },
+                    data: [],
+                },
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisTick: {
+                        show: false,
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            // type: 'dashed',
+                            color: 'rgba(39, 41, 58, 0.3)',
+                            width: 1,
+                        },
+                    },
+                    axisLine: {
+                        show: false,
+                        lineStyle: {
+                            color: 'rgb(2,185,208)',
+                        },
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#959FA9',
+                            fontSize: 14,
+                        },
+                    },
+                },
+            ],
+            series: [
+                {
+                    name: '销售总量',
+                    type: 'bar',
+                    barGap: 0,
+                    barWidth: 10,
+                    emphasis: {
+                        focus: 'series',
+                    },
+                    data: [],
+                },
+                {
+                    name: '销售总额',
+                    type: 'bar',
+                    barWidth: 10,
+                    emphasis: {
+                        focus: 'series',
+                    },
+                    data: [],
+                },
+                {
+                    name: '剩余总额',
+                    type: 'bar',
+                    barWidth: 10,
+                    emphasis: {
+                        focus: 'series',
+                    },
+                    data: [],
+                },
+            ],
+        };
+
+
+        $.ajax({
+            url: "/getData3",
+            success: function(datas) {
+
+                console.log(datas.name)
+                option_chart3.xAxis[0].data=datas.name
+                option_chart3.series[0].data=datas.salesum
+                option_chart3.series[1].data=datas.saleprice
+                option_chart3.series[2].data=datas.surplus
+
+                myChart_chart3.setOption(option_chart3);
+
+            },
+            error: function(xhr, type, errorThrown) {
+            }
+        });
+    });
+
+    // 下面第一个饼形图
+    $(function (){
+        var myChart_chart4 = echarts.init(document.getElementById("chart4"));
+        var option_chart4 = {
+            title: {
+                left: 'center',
+                text: '员工学历占比',
+                top:15,
+                textStyle: {
+                    color: '#333333',
+                    fontWeight: 'bold',
+                    fontSize: 20
+                }
+            },
+            color: [
+                '#19D4AE',
+                '#FFB980',
+                '#5ab1ef',
+                '#d9d0c7',
+                '#d87a80',
+                '#d49ea2',
+                '#18957b',
+                '#9d7edb',
+                '#fa6e86',
+                '#0F63A4',
+                '#8151e2',
+                '#c4b4e4',
+                '#fbae44',
+                '#9fb7fd',
+                '#2092fc',
+                '#8bfdcd',
+                '#7aa3a8',
+                '#bd5981',
+                '#9c8a88',
+                '#85a998',
+            ],
+            tooltip: {
+                trigger: 'item',
+                // formatter: '{b} : {c} ({d}%)'
+                formatter:function(param){
+                    return param.marker + param.name+"："+ param.value + "<br>";
+                }
+            },
+            series: [
+                {
+                    name: '',
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '60%'],
+                    data: [],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        $.ajax({
+            url:"/getData4",
+            success: function (datas) {
+                option_chart4.series[0].data=datas;
+                myChart_chart4.setOption(option_chart4);
+            },
+            error: function(xhr, type, errorThrown) {
+            }
+        });
+    })
+
+
+    //中间词云
+    $(function (){
+        var myChart_chart5 = echarts.init(document.getElementById("chart5"));
+
+        var option_chart5 = {
+            title: {
+                left: 'center',
+                text: '药品购买热点分析',
+                top:5,
+                textStyle: {
+                    color: '#333333',
+                    fontWeight: 'bold',
+                    fontSize: 20
+                }
+            },
+            tooltip: {
+                show: true
+            },
+            series: [{
+                name: '热点分析',
+                type: 'wordCloud',
+                //size: ['9%', '99%'],
+                sizeRange: [10, 60],
+                rotationRange: [0, 90],
+                rotationStep: 90,
+                //textRotation: [0, 45, 90, -45],
+
+                textPadding: 0,
+
+                textStyle: {
+
+                    color: function() {
+                        return 'rgb(' + [
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160)
+                        ].join(',') + ')';
+                    },
+
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowColor: '#333'
+                    }
+                },
+                data: []
+            }]
+        };
+
+        $.ajax({
+            url:"/getData5",
+            success: function (datas) {
+                option_chart5.series[0].data = datas;
+                myChart_chart5.setOption(option_chart5);
+            },
+            error: function(xhr, type, errorThrown) {
+            }
+        });
+
+
+
+        // myChart_ciyun.on('click', function (params) {
+        //     // alert((params.name));
+        //     window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
+        // });
+
+    });
+
+
+    //下面 第一三个图  柱状图  统计各个客户总的消费情况
+    $(function (){
+
+        var myChart_chart6 = echarts.init(document.getElementById("chart6"));
+        var option_chart6 = {
+
+            title: {
+                left: 'center',
+                text: '各仓库人数统计',
+                top:15,
+                textStyle: {
+                    color: '#333333',
+                    fontWeight: 'bold',
+                    fontSize: 20
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: []
+            },
+            yAxis: {
+                type: 'value'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            series: [
+                {
+                    data: [],
+                    type: 'bar'
+                }
+            ]
+        };
+
+
+        $.ajax({
+            url: "/getData6",
+            success: function(datas) {
+                option_chart6.xAxis.data=datas.name
+                option_chart6.series[0].data=datas.value
+                myChart_chart6.setOption(option_chart6);
+            },
+            error: function(xhr, type, errorThrown) {
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
+
+
+
+

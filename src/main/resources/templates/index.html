@@ -3,14 +3,14 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<title>大气网站后台模板</title>
+		<title>医药信息管理系统</title>
 		<link rel="stylesheet" href="css/layui.css">
 	</head>
 
 	<body class="layui-layout-body">
 		<div class="layui-layout layui-layout-admin">
 			<div class="layui-header">
-				<div class="layui-logo">大气网站后台模板</div>
+				<div class="layui-logo">医药信息管理系统</div>
 				<!-- 头部区域（可配合layui已有的水平导航） -->
 
 				<ul class="layui-nav layui-layout-right">
@@ -38,68 +38,66 @@
 					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 					<ul class="layui-nav layui-nav-tree" lay-filter="test">
 						<li class="layui-nav-item layui-nav-itemed">
-							<a class="" href="javascript:;">菜单栏</a>
+							<a class="" href="javascript:;">客户信息管理</a>
 							<dl class="layui-nav-child">
 								<dd>
-									<a href="/userList" target="right">用户管理</a>
+									<a href="/customerList" target="right">客户信息列表</a>
 								</dd>
 
-								<dd>
-									<a href="product.html" target="right">产品管理</a>
-								</dd>
-								<dd>
-									<a href="newsType.html" target="right">新闻分类管理</a>
-								</dd>
-								<dd>
-									<a href="news.html" target="right">新闻管理</a>
-								</dd>
-								<dd>
-									<a href="link.html" target="right">友情链接</a>
-								</dd>
-								<dd>
-									<a href="message.html" target="right">留言管理</a>
-								</dd>
-								<dd>
-									<a href="message.html" target="right">用户管理</a>
-								</dd>
-								<dd>
-									<a href="javascript:void(0)"  onclick="updatePwd('修改密码',1)">修改密码</a>
-								</dd>
 							</dl>
 						</li>
-						<li class="layui-nav-item">
-							<a href="javascript:;">菜单栏</a>
+
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">仓库信息管理</a>
 							<dl class="layui-nav-child">
-								
+								<dd>
+									<a href="/warehouseList" target="right">仓库信息列表</a>
+								</dd>
+
 							</dl>
 						</li>
-						<li class="layui-nav-item">
-							<a href="javascript:;">菜单栏</a>
+
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">药品信息管理</a>
 							<dl class="layui-nav-child">
-								
+								<dd>
+									<a href="/drugList" target="right">药品信息列表</a>
+								</dd>
+
 							</dl>
 						</li>
-						
-						<li class="layui-nav-item">
-							<a href="javascript:;">菜单栏</a>
+
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">仓库员工信息管理</a>
 							<dl class="layui-nav-child">
-								
+								<dd>
+									<a href="/staffList" target="right">仓库员工信息列表</a>
+								</dd>
+
 							</dl>
 						</li>
-						
-						<li class="layui-nav-item">
-							<a href="javascript:;">菜单栏</a>
+
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">订单信息管理</a>
 							<dl class="layui-nav-child">
-								
+								<dd>
+									<a href="/orderList" target="right">订单信息列表</a>
+								</dd>
+
 							</dl>
 						</li>
-						
-						<li class="layui-nav-item">
-							<a href="javascript:;">菜单栏</a>
+
+
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">信息可视化</a>
 							<dl class="layui-nav-child">
-								
+								<dd>
+									<a href="/visualization" target="right">可视化大屏</a>
+								</dd>
+
 							</dl>
 						</li>
+
 						
 					</ul>
 				</div>
@@ -108,7 +106,7 @@
 			<div class="layui-body" style="z-index: 0;">
 				<!-- 内容主体区域 -->
 				<div style="padding: 15px;">
-					<iframe  name="right" frameborder="0" width="100%" height="1200"></iframe>
+					<iframe  src="welcome.html" name="right" frameborder="0" width="100%" height="1600"></iframe>
 
 				</div>
 			</div>

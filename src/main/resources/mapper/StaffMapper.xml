@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sgh.dao.StaffMapper">
+
+
+
+
+
+    <select id="queryAllStaff" resultType="Staff">
+        SELECT * FROM t_staff
+    </select>
+
+
+    <select id="getStaffById" parameterType="int" resultType="Staff">
+        SELECT * FROM t_staff
+        where sid=#{sid}
+    </select>
+
+
+    <select id="getStaffByNameAndWid" parameterType="map" resultType="Staff">
+        SELECT *
+        FROM t_staff
+        WHERE sname like #{sname}
+        <if test="wid != null">
+            and wid = #{wid}
+        </if>
+    </select>
+
+    <delete id="deleteStaffById" parameterType="int">
+        DELETE FROM t_staff WHERE sid=#{sid}
+    </delete>
+
+
+    <insert id="insertStaff" parameterType="Staff">
+        INSERT INTO t_staff(wid,sname,ssex,sage,sedu)
+        VALUES(#{wid},#{sname},#{ssex},#{sage},#{sedu});
+    </insert>
+
+    <update id="updateStaff" parameterType="Staff">
+        UPDATE
+            t_staff
+        SET wid=#{wid} ,sname=#{sname} , ssex=#{ssex},sage=#{sage} , sedu=#{sedu}
+        WHERE sid=#{sid}
+    </update>
+
+</mapper>

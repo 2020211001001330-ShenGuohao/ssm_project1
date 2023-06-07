@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sgh.dao.DrugMapper">
+
+
+
+
+    <select id="queryAllDrug" resultType="Drug">
+        SELECT * FROM t_drug
+    </select>
+
+    <select id="getDrugById" parameterType="int" resultType="Drug">
+        SELECT * FROM t_drug
+        where did=#{did}
+    </select>
+
+    <select id="getDrugByNameAndWid" parameterType="map" resultType="Drug">
+        SELECT *
+        FROM t_drug
+        WHERE dname like #{dname}
+        <if test="wid != null">
+            and wid = #{wid}
+        </if>
+    </select>
+
+
+    <delete id="deleteDrugById" parameterType="int">
+        DELETE FROM t_drug WHERE did=#{did}
+    </delete>
+
+    <insert id="insertDrug" parameterType="Drug">
+        INSERT INTO t_drug(wid,dname,dsum,dprice)
+        VALUES(#{wid},#{dname},#{dsum},#{dprice});
+    </insert>
+
+    <update id="updateDrug" parameterType="Drug">
+        UPDATE
+            t_drug
+        SET wid=#{wid} ,dname=#{dname} , dsum=#{dsum},dprice=#{dprice}
+        WHERE did=#{did}
+    </update>
+
+</mapper>

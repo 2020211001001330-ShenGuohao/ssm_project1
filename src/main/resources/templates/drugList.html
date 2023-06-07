@@ -1,0 +1,281 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/amazeui.min.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="admin-content-body">
+  <div class="am-cf am-padding am-padding-bottom-0">
+    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">药品信息管理</strong><small></small></div>
+  </div>
+
+  <hr>
+
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-md-6">
+      <div class="am-btn-toolbar">
+        <div class="am-btn-group am-btn-group-xs">
+          <button id="add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addWindows"><span class="am-icon-plus"></span> 新增</button>
+        </div>
+      </div>
+    </div>
+<!--    <div class="am-u-sm-12 am-u-md-3">-->
+
+<!--    </div>-->
+    <div class="am-u-sm-12 am-u-md-6">
+      <div class="am-input-group am-input-group-sm">
+        <form action="queryDrug.action" method="post">
+
+          <input type="text" name="queryName1" class="am-form-field" placeholder="请输入药品名称" style="width: 200px;margin-right: 20px" th:value="${queryName1}">
+          <input type="text" name="queryName2" class="am-form-field" placeholder="请输入仓库编号" style="width: 150px;margin-right: 20px" th:value="${queryName2}">
+          <span class="am-input-group-btn">
+                           <button class="am-btn am-btn-default" type="submit">搜索</button>
+                   </span>
+        </form>
+
+
+
+
+      </div>
+    </div>
+  </div>
+  <div class="am-g">
+    <div class="am-u-sm-12">
+      <form class="am-form">
+        <table class="am-table am-table-striped am-table-hover table-main">
+          <thead>
+          <tr>
+
+            <th>药品编号</th>
+            <th>药品名称</th>
+            <th>药品数目</th>
+            <th>药品单价</th>
+            <th>所在仓库编号</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="drug:${drugList}">
+            <td th:text="${drug.did}"></td>
+            <td th:text="${drug.dname}"></td>
+            <td th:text="${drug.dsum}"></td>
+            <td th:text="${drug.dprice}"></td>
+            <td th:text="${drug.wid}"></td>
+            <td>
+              <div class="am-btn-toolbar">
+                <div class="am-btn-group am-btn-group-xs">
+                  <a class="btn btn-warning"> 编辑</a>
+                  <a class="btn btn-danger"> 删除</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="am-cf">
+          共 <p th:text="${num}" style="display: inline"></p> 条记录
+          <div class="am-fr">
+            <ul class="am-pagination">
+              <li class="am-disabled">
+                <a href="#">«</a>
+              </li>
+              <li class="am-active">
+                <a href="#">1</a>
+              </li>
+              <li>
+                <a href="#">2</a>
+              </li>
+              <li>
+                <a href="#">3</a>
+              </li>
+              <li>
+                <a href="#">4</a>
+              </li>
+              <li>
+                <a href="#">5</a>
+              </li>
+              <li>
+                <a href="#">»</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+<!-- 添加模态框（Modal） -->
+<div class="modal fade" id="addWindows" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+          添加药品
+        </h4>
+      </div>
+      <form  action="addDrug.action" method="post" class="form-horizontal" role="form">
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="dname" class="col-sm-2 control-label">药品名称</label>
+            <div class="col-sm-10">
+              <input type="text" name="dname" class="form-control" id="dname" placeholder="please input dname">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dsum" class="col-sm-2 control-label">药品数目</label>
+            <div class="col-sm-10">
+              <input type="text" name="dsum" class="form-control" id="dsum" placeholder="please input dsum">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dprice" class="col-sm-2 control-label">药品单价</label>
+            <div class="col-sm-10">
+              <input type="text" name="dprice" class="form-control" id="dprice" placeholder="please input dprice">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="wid" class="col-sm-2 control-label">所在仓库编号</label>
+            <div class="col-sm-10">
+              <input type="text" name="wid" class="form-control" id="wid" placeholder="please input wid">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+          </button>
+          <button type="submit" class="btn btn-primary">
+            提交更改
+          </button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+
+
+
+<!-- 编辑模态框（Modal） -->
+<div class="modal fade" id="updateWindows" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel2">
+          编辑药品
+        </h4>
+      </div>
+
+      <form  action="updateDrug.action" method="post" class="form-horizontal" role="form">
+        <div class="modal-body">
+
+          <input type="hidden" name="did" id="udid">
+
+          <div class="form-group">
+            <label for="udname" class="col-sm-2 control-label">药品名称</label>
+            <div class="col-sm-10">
+              <input type="text" name="dname" class="form-control" id="udname">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="udsum" class="col-sm-2 control-label">药品数目</label>
+            <div class="col-sm-10">
+              <input type="text" name="dsum" class="form-control" id="udsum">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="udprice" class="col-sm-2 control-label">药品单价</label>
+            <div class="col-sm-10">
+              <input type="text" name="dprice" class="form-control" id="udprice">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="uwid" class="col-sm-2 control-label">所在仓库编号</label>
+            <div class="col-sm-10">
+              <input type="text" name="wid" class="form-control" id="uwid">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+          </button>
+          <button type="submit" class="btn btn-primary">
+            提交更改
+          </button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+
+
+
+
+
+
+<script>
+  $(".btn-warning").click(function (){
+    var id = parseInt($(this).parents('td').siblings().eq(0).text());
+    console.log(id);
+    $.ajax({
+      type: 'get',
+      url: 'getDrugById?did=' +id ,
+      success: function (data) {
+        $('#udid').val(data.did)
+        $('#udname').val(data.dname)
+        $('#udsum').val(data.dsum);
+        $('#udprice').val(data.dprice);
+        $('#uwid').val(data.wid);
+      }
+    })
+
+    $("#updateWindows").modal('show');
+  })
+
+  $('.btn-danger').click(function (){
+    // console.log($(this).parent().siblings());
+    var id =  parseInt($(this).parents('td').siblings().eq(0).text());
+    console.log(id,typeof(id));
+    if (confirm("确定删除id:"+id+"药品?")) {
+      //点击确定后操作
+      $.ajax({
+        type: 'get',
+        url: 'deleteDrug.action?did=' + id,
+        success: function (data) {
+          if (data===1){
+            window.location.reload()
+            alert("删除成功")
+          }else{
+            alert("删除失败")
+          }
+        }
+      })
+    }
+  })
+
+</script>
+
+
+
+</body>
+</html>
